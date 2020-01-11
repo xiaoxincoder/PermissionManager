@@ -24,6 +24,7 @@ class PermissionFragment : Fragment() {
     }
 
     private lateinit var mActivity:Activity
+    private var resultCallback: ((Boolean) -> Unit)? = {}
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -36,7 +37,8 @@ class PermissionFragment : Fragment() {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    fun requestPermissions(@NotNull permissions: Array<out String>){
+    fun requestPermissions(@NotNull permissions: Array<out String>, resultCallback: ((Boolean) -> Unit)? = {}){
+        this.resultCallback = resultCallback
         requestPermissions(permissions, PERMISSION_REQUEST_CODE)
     }
 
@@ -79,9 +81,16 @@ class PermissionFragment : Fragment() {
 
     private fun onResultPermissionResult(permissions: Array<out String>, grantResults: IntArray,
                                  shouldShowRequestPermissionRationale:Array<out Boolean>) {
-        for ((i, permission) in permissions.withIndex()) {
+//        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            resultCallback?.invoke(true)
+//        }
+//
+        resultCallback?.invoke(grantResults[0] == PackageManager.PERMISSION_GRANTED)
 
-        }
+//        val granted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+//        resultCallback?.invoke(granted)
+//        resultCallback.grantPermissionResult(granted)
+
     }
 
 }

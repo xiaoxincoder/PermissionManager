@@ -10,8 +10,6 @@ package com.keepshare.permission
  */
 interface GrantResultCallback {
 
-    fun grantSuccess()
-
-    fun grantError()
+    fun grantPermissionResult(granted:Boolean)
 
 }
