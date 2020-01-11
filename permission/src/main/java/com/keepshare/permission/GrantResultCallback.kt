@@ -8,6 +8,7 @@ package com.keepshare.permission
  * @Email keepshare@163.com
  * Create DateTime: 2020-01-05
  */
+
 interface GrantResultCallback {
 
     fun grantPermissionResult(granted:Boolean)

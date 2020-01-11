@@ -1,6 +1,7 @@
 package com.keepshare.permission
 
 import android.os.Build
+import android.os.Handler
 import androidx.fragment.app.FragmentActivity
 import org.jetbrains.annotations.NotNull
 
@@ -22,7 +23,6 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
         }
     }
 
-//    private lateinit var resultCallback:GrantResultCallback
     private var permissionFragment:PermissionFragment?
     private var resultCallback: ((Boolean) -> Unit)? = {}
 
@@ -30,27 +30,32 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
         permissionFragment = obtainPermissionFragment(activity)
     }
 
-//    fun requestCallback(resultCallback: GrantResultCallback) {
-//        this.resultCallback = resultCallback
-//        resultCallback.also {  }
-//    }
-
     fun requestCallback(callback:(Boolean) -> Unit) {
         this.resultCallback = callback
     }
 
+    /**
+     * request all
+     */
     fun request(vararg permissions:String):PermissionManager{
         val allGranted = permissions.all { isGranted(it) }
         if (allGranted) {
-            resultCallback?.invoke(true)
+            Handler().post {
+                resultCallback?.invoke(true)
+            }
             return this
         }
         permissionFragment?.requestPermissions(permissions) {
-            resultCallback?.invoke(it)
+            resultCallback?.invoke(it.all { permission ->
+                permission.granted
+            })
         }
         return this
     }
 
+    /**
+     * request else
+     */
     fun requestEach(vararg permissions: Array<out String>) {
 
     }
