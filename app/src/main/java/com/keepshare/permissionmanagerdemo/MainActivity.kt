@@ -23,7 +23,14 @@ class MainActivity : AppCompatActivity() {
                 .init(this)
                 .request(*permissions.toTypedArray())
                 .requestCallback {
-                    Toast.makeText(this, "权限申请$it", Toast.LENGTH_SHORT).show()
+
+                    if (it.reminderBanned) {
+                        Toast.makeText(this, getText(R.string.permission_manager_reminder),
+                            Toast.LENGTH_SHORT).show()
+                        return@requestCallback
+                    }
+
+                    Toast.makeText(this, "权限申请${it.granted}", Toast.LENGTH_SHORT).show()
                 }
         }
     }

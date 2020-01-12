@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.keepshare.permission.PermissionManager;
+import com.keepshare.permission.Result;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -25,9 +26,9 @@ public class TestActivity extends FragmentActivity {
 
         PermissionManager.init(this)
                 .request()
-                .requestCallback(new Function1<Boolean, Unit>() {
+                .requestCallback(new Function1<Result, Unit>() {
                     @Override
-                    public Unit invoke(Boolean aBoolean) {
+                    public Unit invoke(Result result) {
                         return null;
                     }
                 });

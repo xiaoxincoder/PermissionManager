@@ -2,7 +2,6 @@ package com.keepshare.permission
 
 import android.os.Build
 import android.os.Handler
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import org.jetbrains.annotations.NotNull
 
@@ -17,6 +16,7 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
 
     companion object {
         private const val TAG = "permission"
+        private const val DEFAULT_ALL_NAME = "all"
         @JvmStatic
         fun init(activity: FragmentActivity):PermissionManager {
             return PermissionManager(activity)
@@ -24,13 +24,13 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
     }
 
     private var permissionFragment:PermissionFragment?
-    private var resultCallback: ((Boolean) -> Unit)? = {}
+    private var resultCallback: ((Result) -> Unit)? = {}
 
     init {
         permissionFragment = obtainPermissionFragment(activity)
     }
 
-    fun requestCallback(callback:(Boolean) -> Unit) {
+    fun requestCallback(callback:(Result) -> Unit) {
         this.resultCallback = callback
     }
 
@@ -41,7 +41,7 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
         val allGranted = permissions.all { isGranted(it) }
         if (allGranted) {
             Handler().post {
-                resultCallback?.invoke(true)
+                resultCallback?.invoke(Result(DEFAULT_ALL_NAME, granted = true))
             }
             return this
         }
@@ -53,26 +53,30 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
             }
 
             if (reminderBanned) {
-                Toast.makeText(permissionFragment?.context,
-                    permissionFragment?.getText(R.string.permission_manager_reminder),
-                    Toast.LENGTH_SHORT).show()
-                resultCallback?.invoke(false)
+                resultCallback?.invoke(Result(DEFAULT_ALL_NAME, reminderBanned = true))
                 return@requestPermissions
             }
 
-            resultCallback?.invoke(it.all { permission ->
-                permission.granted
-            })
+            resultCallback?.invoke(Result(DEFAULT_ALL_NAME, granted = it.all { permission -> permission.granted }))
+
+//            resultCallback?.invoke(it.all { permission ->
+//                Result(-, granted = permission.granted)
+////                permission.granted
+//            })
         }
         return this
     }
 
     /**
-     * request else
+     * request each
      */
-    fun requestEach(vararg permissions: Array<out String>) {
-
-    }
+//    fun requestEach(vararg permissions: Array<out String>) {
+//        permissions.forEach {
+//
+//
+//            permissionFragment
+//        }
+//    }
 
     private fun isGranted(permission:String):Boolean{
         return !isMarshmallow() || permissionFragment!!.isGranted(permission)
