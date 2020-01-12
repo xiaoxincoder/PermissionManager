@@ -10,7 +10,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object{
         private val permissions = listOf(android.Manifest.permission.CAMERA,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,23 +21,10 @@ class MainActivity : AppCompatActivity() {
         btnPermission.setOnClickListener {
             PermissionManager
                 .init(this)
-                .request(android.Manifest.permission.CAMERA,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                .request(*permissions.toTypedArray())
                 .requestCallback {
                     Toast.makeText(this, "权限申请$it", Toast.LENGTH_SHORT).show()
                 }
         }
-
-
-
-//        val permission = PermissionManager(this)
-//        permission.initCallback(object : GrantResultCallback {
-//            override fun grantPermissionResult(granted: Boolean) {
-//                println(granted)
-//            }
-//        })
-//        permission.request(android.Manifest.permission.CAMERA,
-//            android.Manifest.permission.READ_EXTERNAL_STORAGE)
-
     }
 }

@@ -10,12 +10,11 @@ import androidx.fragment.app.Fragment
 import org.jetbrains.annotations.NotNull
 
 /**
- * @Package com.keepshare.permission
- * @Copyright: keepshare, All rights reserved(版权)
- * @Description:
- * @Author: xin
+ * @Author: Johnny
  * @Email keepshare@163.com
- * Create DateTime: 2020-01-05
+ * @CreateDate: 2020-01-05
+ * @Copyright: keepshare, All rights reserved
+ * @Description:
  */
 class PermissionFragment : Fragment() {
 
@@ -42,18 +41,14 @@ class PermissionFragment : Fragment() {
         requestPermissions(permissions, PERMISSION_REQUEST_CODE)
     }
 
-    /**
-     * 判断是否获取了权限
-     */
+
     @TargetApi(Build.VERSION_CODES.M)
     fun isGranted(permission:String):Boolean {
         return mActivity.checkSelfPermission(
             permission) == PackageManager.PERMISSION_GRANTED
     }
 
-    /**
-     * 判断权限是否被取消
-     */
+
     @TargetApi(Build.VERSION_CODES.M)
     fun isRevoked(permission: String):Boolean {
         return mActivity.packageManager

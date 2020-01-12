@@ -7,18 +7,17 @@ import androidx.fragment.app.FragmentActivity
 import org.jetbrains.annotations.NotNull
 
 /**
- * @Package com.keepshare.permission
- * @Copyright: keepshare, All rights reserved(版权)
- * @Description:
- * @Author: xin
+ * @Author: Johnny
  * @Email keepshare@163.com
- * Create DateTime: 2020-01-05
+ * @CreateDate: 2020-01-05
+ * @Copyright: keepshare, All rights reserved
+ * @Description:
  */
 class PermissionManager private constructor(@NotNull activity: FragmentActivity) {
 
     companion object {
         private const val TAG = "permission"
-
+        @JvmStatic
         fun init(activity: FragmentActivity):PermissionManager {
             return PermissionManager(activity)
         }
