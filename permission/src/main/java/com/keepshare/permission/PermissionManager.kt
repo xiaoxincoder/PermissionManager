@@ -37,7 +37,7 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
     /**
      * request all
      */
-    fun request(vararg permissions:String):PermissionManager{
+    fun request(vararg permissions:String): PermissionManager{
         val allGranted = permissions.all { isGranted(it) }
         if (allGranted) {
             Handler().post {
@@ -57,12 +57,12 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
                 return@requestPermissions
             }
 
-            resultCallback?.invoke(Result(DEFAULT_ALL_NAME, granted = it.all { permission -> permission.granted }))
+            resultCallback?.invoke(Result(
+                    DEFAULT_ALL_NAME,
+                    granted = it.all { permission -> permission.granted }
+                )
+            )
 
-//            resultCallback?.invoke(it.all { permission ->
-//                Result(-, granted = permission.granted)
-////                permission.granted
-//            })
         }
         return this
     }
@@ -70,13 +70,17 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
     /**
      * request each
      */
-//    fun requestEach(vararg permissions: Array<out String>) {
-//        permissions.forEach {
-//
-//
-//            permissionFragment
-//        }
-//    }
+    fun requestEach(vararg permissions:String): PermissionManager {
+
+        permissionFragment?.requestPermissions(permissions) {
+
+            it.forEach { permission ->
+                val reminderBanned = !permission.granted && !permission.shouldShowRequestPermissionRationale
+                resultCallback?.invoke(Result(permission.name, permission.granted, reminderBanned))
+             }
+        }
+        return this
+    }
 
     private fun isGranted(permission:String):Boolean{
         return !isMarshmallow() || permissionFragment!!.isGranted(permission)
