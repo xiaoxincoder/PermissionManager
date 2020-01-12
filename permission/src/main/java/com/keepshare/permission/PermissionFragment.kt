@@ -55,7 +55,7 @@ class PermissionFragment : Fragment() {
      * 判断权限是否被取消
      */
     @TargetApi(Build.VERSION_CODES.M)
-    fun isRevocked(permission: String):Boolean {
+    fun isRevoked(permission: String):Boolean {
         return mActivity.packageManager
             .isPermissionRevokedByPolicy(permission, mActivity.packageName)
     }
@@ -84,16 +84,12 @@ class PermissionFragment : Fragment() {
 
         val resultList = mutableListOf<Permission>()
         permissions.forEachIndexed { index, permission ->
-            val permission = Permission(permission, grantResults[index] == PackageManager.PERMISSION_GRANTED)
+            val permission = Permission(permission,
+                grantResults[index] == PackageManager.PERMISSION_GRANTED,
+                shouldShowRequestPermissionRationale[index])
             resultList.add(permission)
         }
         resultCallback?.invoke(resultList)
-
-//        resultCallback?.invoke(grantResults[0] == PackageManager.PERMISSION_GRANTED)
-
-//        val granted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
-//        resultCallback?.invoke(granted)
-//        resultCallback.grantPermissionResult(granted)
 
     }
 

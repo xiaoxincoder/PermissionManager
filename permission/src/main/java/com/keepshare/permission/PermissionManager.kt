@@ -2,6 +2,7 @@ package com.keepshare.permission
 
 import android.os.Build
 import android.os.Handler
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import org.jetbrains.annotations.NotNull
 
@@ -45,7 +46,21 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
             }
             return this
         }
+
         permissionFragment?.requestPermissions(permissions) {
+
+            val reminderBanned = it.any { permission ->
+                !permission.granted && !permission.shouldShowRequestPermissionRationale
+            }
+
+            if (reminderBanned) {
+                Toast.makeText(permissionFragment?.context,
+                    permissionFragment?.getText(R.string.permission_manager_reminder),
+                    Toast.LENGTH_SHORT).show()
+                resultCallback?.invoke(false)
+                return@requestPermissions
+            }
+
             resultCallback?.invoke(it.all { permission ->
                 permission.granted
             })
@@ -62,6 +77,10 @@ class PermissionManager private constructor(@NotNull activity: FragmentActivity)
 
     private fun isGranted(permission:String):Boolean{
         return !isMarshmallow() || permissionFragment!!.isGranted(permission)
+    }
+
+    private fun isRevoked(permission: String): Boolean {
+        return isMarshmallow() && permissionFragment!!.isRevoked(permission)
     }
 
     private fun obtainPermissionFragment(activity: FragmentActivity): PermissionFragment? {
