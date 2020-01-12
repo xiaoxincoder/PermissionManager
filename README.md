@@ -3,7 +3,7 @@
 ### 使用方法
 
 1.添加依赖<br> 
-implementation 'com.keepshare.permission:permission:0.0.1-alpha'<br> 
+implementation 'com.keepshare.permission:permission:0.0.1-alpha'<br><br> 
 2.代码调用<br>  
 ~~~~
 val permissions = listof(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
