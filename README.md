@@ -3,16 +3,20 @@
 ### 使用方法
 
 1.添加依赖
+***
 implementation 'com.keepshare.permission:permission:0.0.1-alpha'
+***
 2.代码调用
+***
 val permissions = listof(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
 PermissionManager.init(activity)
        .request(*permission.toTypedArray())
        .requestCallback {
             println("申请权限是否成功$it")
        }
-       
+***       
 ### android 中需要动态申请的权限
+~~~~
 1.group:android.permission-group.CONTACTS
         permission:android.permission.WRITE_CONTACTS 
         permission:android.permission.GET_ACCOUNTS 
@@ -46,5 +50,5 @@ PermissionManager.init(activity)
         permission:android.permission.RECEIVE_SMS 
         permission:android.permission.SEND_SMS 
         permission:android.permission.READ_CELL_BROADCASTS
-     
+~~~~
  
