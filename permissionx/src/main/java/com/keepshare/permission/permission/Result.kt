@@ -1,17 +1,14 @@
 package com.keepshare.permission
 
-import android.support.annotation.Keep
-
-
 /**
  * @Author: Johnny
  * @Email keepshare@163.com
- * @CreateDate: 2020-01-05
+ * @CreateDate: 2020-01-12
  * @Copyright: keepshare, All rights reserved
  * @Description:
  */
-@Keep
-data class Permission(
+data class Result(
     val name:String,
     val granted:Boolean = false,
-    val shouldShowRequestPermissionRationale:Boolean = false)
+    val reminderBanned:Boolean = false
+)

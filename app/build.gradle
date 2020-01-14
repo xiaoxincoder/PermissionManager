@@ -25,13 +25,22 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    if (supportX.toBoolean()) {
+        implementation 'androidx.appcompat:appcompat:1.1.0'
+        implementation 'androidx.core:core-ktx:1.1.0'
+        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+        implementation project(':permissionx')
+    } else {
+        implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+        implementation 'com.android.support:appcompat-v7:28.0.0'
+//        implementation project(':permission')
+        implementation 'com.keepshare.permission:permission:0.0.2'
+    }
+
 //    implementation 'com.keepshare.permission:permission:0.0.1-alpha'
-    implementation project(':permission')
+//    implementation project(':permission')
+
 
 }

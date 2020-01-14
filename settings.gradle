@@ -1,2 +1,2 @@
-include ':app', ':permission'
+include ':app', ':permission', ':permissionx'
 rootProject.name='PermissionManagerDemo'

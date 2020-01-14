@@ -1,7 +1,6 @@
 package com.keepshare.permission
 
-import android.support.annotation.Keep
-
+import androidx.annotation.Keep
 
 /**
  * @Author: Johnny
