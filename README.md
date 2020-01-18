@@ -4,7 +4,9 @@
 
 1.添加依赖<br> 
 ~~~~
-implementation 'com.keepshare.permission:permission:0.0.1-alpha'
+implementation 'com.keepshare.permission:permission:0.0.2'
+或者
+implementation 'com.keepshare.permission:permission-x:0.0.2'
 ~~~~ 
 2.同时回调<br>  
 ~~~~
