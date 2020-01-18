@@ -6,16 +6,32 @@
 ~~~~
 implementation 'com.keepshare.permission:permission:0.0.1-alpha'
 ~~~~ 
-2.代码调用<br>  
+2.同时回调<br>  
 ~~~~
 val permissions = listof(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
 
 PermissionManager.init(activity)
        .request(*permission.toTypedArray())
        .requestCallback {
-            println("申请权限是否成功$it")
+            println("申请权限是否成功${it.granted}")
        }
-~~~~      
+~~~~  
+3.单个回调
+~~~
+val permissions = listof(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+
+PermissionManager.init(activity)
+       .requestEach(*permission.toTypedArray())
+       .requestCallback {
+            
+       }
+~~~
+4.Result 解释
+~~~
+name: 权限名称 (同时回调时 name 为 'all')
+granted: 权限是否获取成功
+reminderBanned: 是否点击了 '拒绝后不在提示'
+~~~
 ### android 中需要动态申请的权限
 ~~~~
 1.group:android.permission-group.CONTACTS
